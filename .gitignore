@@ -1,0 +1,5 @@
+./URL_Shortener_Service/node_modules
+./Uid_Generator/node_modules
+./URL_Shortener_Service/.env
+./URL_Shortener_Service/.env
+./secret.yaml

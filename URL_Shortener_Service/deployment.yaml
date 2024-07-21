@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: url-shortener-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: url-shortener-pod
+  template:
+    metadata:
+      labels:
+        app: url-shortener-pod
+    spec:
+      containers:
+        - name: url-shortener-container
+          image: url_shortener:latest
+          imagePullPolicy: Never
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: URL_SHORTENER_PORT
+
+            - name: EXTERNAL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: URL_SHORTENER_EXTERNAL_PORT
+
+            - name: UID_GEN_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: UID_GEN_PORT
+
+            - name: UID_GEN_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: UID_GEN_SERVICE
+
+            - name: URL_SHORTENER_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: URL_SHORTENER_SERVICE
+
+            - name: REDIS_STACK_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: REDIS_STACK_USERNAME
+
+            - name: REDIS_STACK_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: REDIS_STACK_PASSWORD
+
+            - name: REDIS_STACK_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: REDIS_STACK_HOST
+
+            - name: REDIS_STACK_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: REDIS_STACK_PORT
+          ports:
+            - containerPort: 5000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: url-shortener-service
+spec:
+  type: ClusterIP
+  selector:
+    app: url-shortener-pod
+  ports:
+    - port: 5000
+      targetPort: 5000

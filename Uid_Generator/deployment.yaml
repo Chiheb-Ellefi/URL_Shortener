@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uid-gen-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: uid-gen-pod
+  template:
+    metadata:
+      labels:
+        app: uid-gen-pod
+    spec:
+      containers:
+        - name: uid-gen-container
+          image: uid_gen_service:latest
+          imagePullPolicy: Never
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: UID_GEN_PORT
+            - name: REDIS_STACK_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: REDIS_STACK_USERNAME
+
+            - name: REDIS_STACK_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: REDIS_STACK_PASSWORD
+
+            - name: REDIS_STACK_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: REDIS_STACK_HOST
+
+            - name: REDIS_STACK_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: REDIS_STACK_PORT
+
+          ports:
+            - containerPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: uid-gen-service
+spec:
+  type: ClusterIP
+  selector:
+    app: uid-gen-pod
+  ports:
+    - port: 3000
+      targetPort: 3000
