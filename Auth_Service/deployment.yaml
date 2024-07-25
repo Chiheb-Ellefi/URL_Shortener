@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: auth-container
-          image: <Image>
+          image: auth_service:latest
+          imagePullPolicy: Never
           env:
             - name: MONGO_URI
               valueFrom:

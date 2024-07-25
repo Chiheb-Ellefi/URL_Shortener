@@ -1,15 +1,18 @@
 FROM node:14
 
+# Create app directory
 WORKDIR /usr/src/app
 
-COPY package*.json ./ 
-
+# Install app dependencies
+COPY package*.json ./
 RUN npm install
 
-COPY  . .
+# Bundle app source
+COPY . .
 
+# Expose port
 EXPOSE 8080
 
+# Start the app
+CMD ["node", "server.js"]
 
-
-CMD [ "npm", "start" ]
