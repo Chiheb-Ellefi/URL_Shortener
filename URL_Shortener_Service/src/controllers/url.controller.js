@@ -37,3 +37,5 @@ export const getUrl = async (req, res) => {
 
   res.status(StatusCodes.PERMANENT_REDIRECT).redirect(response);
 };
+
+export const deleteUrl = async (req, res) => {};

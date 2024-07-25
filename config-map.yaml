@@ -8,3 +8,6 @@ data:
   URL_SHORTENER_EXTERNAL_PORT: "30001"
   UID_GEN_SERVICE: uid-gen-service
   UID_GEN_PORT: "3000"
+  AUTH_SERVICE: auth-service
+  AUTH_PORT: "8080"
+  JWT_EXPIRATION: "60"

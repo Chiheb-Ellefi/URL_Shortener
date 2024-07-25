@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use("/", router);
 app.use(ErrorHandlingMiddleware);
-const port = process.env.port || 5000;
+const port = process.env.PORT || 5000;
 const start = async () => {
   app.listen(port, console.log(`Listening on port ${port}`));
   await authenticate();

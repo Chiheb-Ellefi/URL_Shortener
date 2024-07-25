@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: auth-pod
+  template:
+    metadata:
+      labels:
+        app: auth-pod
+    spec:
+      containers:
+        - name: auth-container
+          image: <Image>
+          env:
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: MONGO_URI
+
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: JWT_SECRET
+
+            - name: JWT_ALGO
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: JWT_ALGO
+
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: AUTH_PORT
+
+            - name: JWT_EXPIRATION
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: JWT_EXPIRATION
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+spec:
+  type: ClusterIP
+  selector:
+    app: auth-pod
+  ports:
+    - port: 8080
+      targetPort: 8080

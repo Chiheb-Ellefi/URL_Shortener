@@ -19,6 +19,23 @@ URL.init(
       allowNull: false,
       unique: true,
     },
+    click: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    qr_code: {
+      type: DataTypes.STRING,
+      defaultValue: false,
+      unique: true,
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+    },
   },
   { sequelize, tableName: "urls", modelName: "URL", timestamps: true }
 );
