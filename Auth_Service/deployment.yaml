@@ -46,6 +46,31 @@ spec:
                 configMapKeyRef:
                   name: config-map
                   key: JWT_EXPIRATION
+
+            - name: REDIS_STACK_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: REDIS_STACK_USERNAME
+
+            - name: REDIS_STACK_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: REDIS_STACK_PASSWORD
+
+            - name: REDIS_STACK_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: REDIS_STACK_HOST
+
+            - name: REDIS_STACK_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: REDIS_STACK_PORT
+
           ports:
             - containerPort: 8080
 

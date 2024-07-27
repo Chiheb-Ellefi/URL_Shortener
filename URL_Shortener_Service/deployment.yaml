@@ -70,6 +70,30 @@ spec:
                 secretKeyRef:
                   name: secret-variables
                   key: REDIS_STACK_PORT
+
+            - name: PSQL_URI
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: PSQL_URI
+
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: JWT_SECRET
+
+            - name: JWT_ALGO
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: JWT_ALGO
+
+            - name: JWT_EXPIRATION
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: JWT_EXPIRATION
           ports:
             - containerPort: 5000
 

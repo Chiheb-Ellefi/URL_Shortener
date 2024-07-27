@@ -22,6 +22,7 @@ spec:
                 configMapKeyRef:
                   name: config-map
                   key: UID_GEN_PORT
+
             - name: REDIS_STACK_USERNAME
               valueFrom:
                 secretKeyRef:

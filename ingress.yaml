@@ -7,20 +7,24 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: global-app.com
+    - host: url.global-app.com
       http:
         paths:
-          - path: "/uid"
-            pathType: Exact
-            backend:
-              service:
-                name: uid-gen-service
-                port:
-                  number: 3000
-          - path: "/"
+          - path: /
             pathType: Prefix
             backend:
               service:
                 name: url-shortener-service
                 port:
                   number: 5000
+
+    - host: auth.global-app.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-service
+                port:
+                  number: 8080
