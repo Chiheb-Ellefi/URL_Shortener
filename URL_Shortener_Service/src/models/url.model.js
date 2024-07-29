@@ -25,8 +25,7 @@ URL.init(
       defaultValue: 0,
     },
     qr_code: {
-      type: DataTypes.STRING,
-      defaultValue: false,
+      type: DataTypes.TEXT,
       unique: true,
     },
     status: {

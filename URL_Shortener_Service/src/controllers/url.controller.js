@@ -2,7 +2,7 @@ import axios from "axios";
 import { createUrl } from "../services/url.service.js";
 import { hashToBase62 } from "../services/hash.js";
 import { StatusCodes } from "http-status-codes";
-
+import QRCode from "qrcode";
 import {
   BadRequestError,
   NotFoundError,
@@ -14,15 +14,22 @@ export const addShortUrl = async (req, res) => {
     `http://${process.env.UID_GEN_SERVICE}:${process.env.UID_GEN_PORT}`
   );
   const id = response.data;
+
   const hash = hashToBase62(parseInt(id));
   const { url } = req.body;
   if (!url) {
     throw new BadRequestError("Please provide a url to make it short.");
   }
-  const short_url = `http://${process.env.URL_SHORTENER_SERVICE}:${process.env.EXTERNAL_PORT}/${hash}`;
-  await createUrl({ url_id: id, url, hash });
+  const short_url = `http://url.global-app/${hash}`;
+  const qr_code = await QRCode.toString(short_url, {
+    errorCorrectionLevel: "H",
+    type: "svg",
+  });
 
-  res.status(StatusCodes.CREATED).json(short_url);
+  const urlObject = { url_id: id, url, hash, qr_code, user_id: req.user_id };
+  await createUrl(urlObject);
+
+  res.status(StatusCodes.CREATED).json(urlObject);
 };
 
 export const getUrl = async (req, res) => {
