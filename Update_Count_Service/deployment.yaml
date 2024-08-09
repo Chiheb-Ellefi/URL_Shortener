@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: queue-consumer-deployment
+  name: update-count-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: queue-consumer-pod
+      app: update-count-pod
   template:
     metadata:
       labels:
-        app: queue-consumer-container
+        app: update-count-pod
     spec:
       containers:
-        - name: consumer-container
-          image: queue-consumer:latest
+        - name: update-count-container
+          image: update-count:latest
           imagePullPolicy: Never
           env:
             - name: PORT
@@ -60,10 +60,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: queue-consumer-service
+  name: update-count-service
 spec:
   selector:
-    app: queue-consumer-pod
+    app: update-count-pod
   ports:
-    - port: 3002
+    - port: 5000
       targetPort: 5000
