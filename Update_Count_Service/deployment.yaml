@@ -16,10 +16,54 @@ spec:
         - name: consumer-container
           image: queue-consumer:latest
           imagePullPolicy: Never
-          resources:
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: UPDATE_COUNT_PORT
+
+            - name: REDIS_STACK_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: REDIS_STACK_USERNAME
+
+            - name: REDIS_STACK_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: REDIS_STACK_PASSWORD
+
+            - name: REDIS_STACK_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: REDIS_STACK_HOST
+
+            - name: REDIS_STACK_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: REDIS_STACK_PORT
+
+            - name: PSQL_URI
+              valueFrom:
+                secretKeyRef:
+                  name: secret-variables
+                  key: PSQL_URI
+
           ports:
             - containerPort: 5000
-            -
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: queue-consumer-service
+spec:
+  selector:
+    app: queue-consumer-pod
+  ports:
+    - port: 3002
+      targetPort: 5000
