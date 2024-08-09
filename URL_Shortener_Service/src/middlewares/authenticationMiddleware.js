@@ -12,6 +12,8 @@ export const authenticationMiddleware = async (req, res, next) => {
     throw new UnauthenticatedError("Acess denied, Invalid token.");
   }
   const decoded = jwt.verify(access_token, process.env.JWT_SECRET);
-  req.user_id = decoded.user_id;
+  console.log("decoddeddd", decoded);
+
+  req.body.user_id = decoded.user_id;
   next();
 };

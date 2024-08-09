@@ -16,12 +16,14 @@
         "dotenv": "^16.4.5",
         "express": "^4.19.2",
         "express-async-errors": "^3.1.1",
+        "firebase": "^10.12.4",
         "http-status-codes": "^2.3.0",
         "jsonwebtoken": "^9.0.2",
         "nodemon": "^3.1.4",
         "pg": "^8.12.0",
         "qrcode": "^1.5.3",
         "redis": "^4.6.15",
-        "sequelize": "^6.37.3"
+        "sequelize": "^6.37.3",
+        "url-shortener": "file:"
     }
 }

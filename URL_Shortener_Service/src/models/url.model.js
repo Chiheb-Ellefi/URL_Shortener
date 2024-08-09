@@ -3,40 +3,37 @@ import { Sequelize, Model, DataTypes } from "sequelize";
 
 class URL extends Model {}
 
-URL.init(
-  {
+URL.init({
     url_id: {
-      type: DataTypes.STRING,
-      primaryKey: true,
+        type: DataTypes.STRING,
+        primaryKey: true,
     },
     url: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
     },
     hash: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
     },
     click: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      defaultValue: 0,
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        defaultValue: 0,
     },
     qr_code: {
-      type: DataTypes.TEXT,
-      unique: true,
+        type: DataTypes.TEXT,
+        unique: true,
     },
     status: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
     },
     user_id: {
-      type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
     },
-  },
-  { sequelize, tableName: "urls", modelName: "URL", timestamps: true }
-);
+}, { sequelize, tableName: "urls", modelName: "URL", timestamps: true });
 
 export default URL;

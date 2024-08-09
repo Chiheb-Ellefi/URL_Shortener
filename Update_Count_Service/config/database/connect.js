@@ -6,7 +6,6 @@ export const sequelize = new Sequelize(process.env.PSQL_URI, {
 export const authenticate = async () => {
   try {
     await sequelize.authenticate();
-    await sequelize.sync({ force: true });
 
     console.log("Connection has been established successfully.");
   } catch (error) {

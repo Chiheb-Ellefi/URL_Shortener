@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queue-consumer-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: queue-consumer-pod
+  template:
+    metadata:
+      labels:
+        app: queue-consumer-container
+    spec:
+      containers:
+        - name: consumer-container
+          image: queue-consumer:latest
+          imagePullPolicy: Never
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 5000
+            -

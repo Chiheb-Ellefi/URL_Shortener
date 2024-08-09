@@ -27,10 +27,16 @@ UserSchema.pre("save", async function () {
 });
 
 UserSchema.methods.createAccessToken = function () {
-  return jwt.sign({ user_id: this.user_id }, process.env.JWT_SECRET, {
-    algorithm: process.env.JWT_ALGO,
-    expiresIn: process.env.JWT_EXPIRATION,
-  });
+  console.log("before sign", this._id.toString());
+  const token = jwt.sign(
+    { user_id: this._id.toString() },
+    process.env.JWT_SECRET,
+    {
+      algorithm: process.env.JWT_ALGO,
+      expiresIn: process.env.JWT_EXPIRATION,
+    }
+  );
+  return token;
 };
 UserSchema.methods.comparePassword = async function (password) {
   return await compare(password, this.password);
