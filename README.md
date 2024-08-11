@@ -40,7 +40,7 @@ The services are deployed to Kubernetes (K8s) and use the following environment 
 
 The configuration files for deploying the services to Kubernetes are provided in the repository. Ensure that you have the necessary environment variables set up before deployment.
 
-### Setting Up Redis and PostgreSQL
+### Setting Up Redis, PostgreSQL, and MongoDB
 
 1. **Redis:** 
    - Sign up for Redis Cloud and create a new instance.
@@ -49,6 +49,9 @@ The configuration files for deploying the services to Kubernetes are provided in
 2. **PostgreSQL (Supabase):**
    - Sign up for Supabase and create a new project.
    - Note down the connection URI (PSQL_URI).
+3. **MongoDB:**
+   - Set up a MongoDB instance, either locally or using a cloud service like MongoDB Atlas.
+   - Note down the connection URI (MONGO_URI).
 
 ### Deployment Steps
 
