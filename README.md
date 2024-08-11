@@ -33,7 +33,8 @@ The services are deployed to Kubernetes (K8s) and use the following environment 
 ### External Dependencies
 
 - **Redis:** Used as an application cache to decrease the latency of GET requests and reduce the load on the server. You can use the free tier of Redis Cloud.
-- **PostgreSQL:** Hosted on Supabase for storing data. 
+- **PostgreSQL:** Hosted on Supabase for storing data.
+- **MongoDB:** Hosted on MongoDB Atlas to store user credentials and sessions.
 
 ### Configuration
 
