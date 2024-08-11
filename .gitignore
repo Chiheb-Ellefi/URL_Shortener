@@ -4,3 +4,4 @@
 /URL_Shortener_Service/.env
 /Uid_Generator/.env
 /secret.yaml
+/URL_Shortener_Service/config/database/firebase.js
