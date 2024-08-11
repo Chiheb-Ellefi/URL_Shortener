@@ -10,8 +10,10 @@ This repository contains a URL shortener system that takes a long URL and genera
 
 The system is divided into two main services:
 
-1. **UID Generator Service:** This service generates unique IDs. You can find more details about this service [here](https://github.com/Chiheb-Ellefi/Unique_ID_Generator).
-2. **URL Shortener Service:** This service takes the UID, hashes it, and returns the shortened URL.
+1. **Authentication Service:** This service manages user authentication and sessions. It stores user credentials and sessions in MongoDB, generates JWT access tokens with expiration dates, and issues 32-byte random refresh tokens. The refresh token is used to obtain a new access token without needing to re-enter credentials when the original access token expires.
+2. **UID Generator Service:** This service generates unique IDs. You can find more details about this service [here](https://github.com/Chiheb-Ellefi/Unique_ID_Generator).
+3. **URL Shortener Service:** This service takes the UID, hashes it, and returns the shortened URL.
+4. **Update Count Service:** This service tracks the number of clicks on each short URL. When a user clicks on a short URL, the click count is incremented in the cache, and a message with the URL hash is published to a Redis pub/sub channel. The Update Count Service subscribes to this channel and increments the click count in the database for the corresponding URL hash.
 
 Both services are deployed using Kubernetes and are connected together. The configuration files for the Kubernetes deployment are included in the repository.
 
@@ -24,17 +26,21 @@ The services are deployed to Kubernetes (K8s) and use the following environment 
 - `REDIS_STACK_HOST`
 - `REDIS_STACK_PORT`
 - `PSQL_URI`
+- `MONGO_URI`
+- `JWT_SECRET`
+- `JWT_ALGO`
 
 ### External Dependencies
 
 - **Redis:** Used as an application cache to decrease the latency of GET requests and reduce the load on the server. You can use the free tier of Redis Cloud.
-- **PostgreSQL:** Hosted on Supabase for storing data. 
+- **PostgreSQL:** Hosted on Supabase for storing data.
+- **MongoDB:** Hosted on MongoDB Atlas to store user credentials and sessions.
 
 ### Configuration
 
 The configuration files for deploying the services to Kubernetes are provided in the repository. Ensure that you have the necessary environment variables set up before deployment.
 
-### Setting Up Redis and PostgreSQL
+### Setting Up Redis, PostgreSQL, and MongoDB
 
 1. **Redis:** 
    - Sign up for Redis Cloud and create a new instance.
@@ -43,6 +49,9 @@ The configuration files for deploying the services to Kubernetes are provided in
 2. **PostgreSQL (Supabase):**
    - Sign up for Supabase and create a new project.
    - Note down the connection URI (PSQL_URI).
+3. **MongoDB:**
+   - Set up a MongoDB instance, either locally or using a cloud service like MongoDB Atlas.
+   - Note down the connection URI (MONGO_URI).
 
 ### Deployment Steps
 
@@ -60,6 +69,7 @@ The configuration files for deploying the services to Kubernetes are provided in
    - Express.js
    - Redis
    - PostgreSQL
+   - MongoDB
    - Docker
    - Kubernetes
 
